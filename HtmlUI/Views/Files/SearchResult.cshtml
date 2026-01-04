@@ -1,0 +1,32 @@
+﻿@using HtmlUI.Helpers
+@using HtmlUI.Models.Entities
+@model IEnumerable<IEntityBase>
+@{
+    ViewData["Title"] = "File Search Result";
+}
+<h3>File Search Results</h3>
+<div class="col-md-12 tableContainer">
+    @Html.CreateDataTable(Model, "searchResultTable", "File")
+</div>
+
+
+@section Scripts {
+    @Html.DataTableViewBtn_Click(Model)
+
+    @Html.DataTablesForSearch();
+    <script>
+            //https://datatables.net/manual/installation
+
+        // $(document).ready(function () {
+
+        //     $('#searchResultTable').DataTable({
+        //         searching: true,
+        //         scrollY:400,
+        //         scrollX: true
+        //         // columnDefs: [{ width: '10%', targets: 3 }]
+        //     });
+        // });
+
+        
+    </script>
+    }

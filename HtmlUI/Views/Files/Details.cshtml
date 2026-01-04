@@ -1,0 +1,17 @@
+﻿@using HtmlUI.Helpers
+@model HtmlUI.Models.Details.IDetailHeader
+@{
+    ViewData["Title"] = "File Detail";
+}
+
+@Html.EntityDetailHeader(Model)
+
+@Html.EntityDetailNavTabs(Model.DetailTabItems)
+
+
+
+@section Scripts {
+    @Html.DataTablesForDetail(Model);
+
+    @Html.HeaderButtons_Click(Model)
+}

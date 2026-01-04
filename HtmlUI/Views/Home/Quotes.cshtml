@@ -1,0 +1,14 @@
+﻿@using HtmlUI.Helpers
+@model HtmlUI.Models.HomeModel
+@{
+    ViewData["Title"] = "Quotes Dashboard";
+}
+
+<div class="text-center">
+    <div class="col-md-12">
+        <h2 class="col-md-4 dashboardHeading">Quotes</h2><div class="col-md-7"></div>
+    </div>
+    <div class="col-md-12">
+        @Html.DashboardList(Model.DashboardOptions, "Quotes")
+    </div>
+</div>

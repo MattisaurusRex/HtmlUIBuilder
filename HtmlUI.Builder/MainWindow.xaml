@@ -1,0 +1,35 @@
+﻿<Window x:Class="HtmlUI.Builder.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HtmlUI.Builder"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="290" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="290" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Vertical"  Background="Beige">
+
+            <Label Content="Enter fields for search entity" Margin="1 1 1 1" />
+            <Label />
+            <Button Content="new field" Margin="1 1 1 1" Command="" Width="150" HorizontalAlignment="Left" />
+            <Label />
+            
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Field type:" />
+                <ComboBox Width="100"  Name="fieldType" DisplayMemberPath="FieldType"
+                        SelectedItem="" />
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Field name:" />
+                <ComboBox Width="100"  Name="fieldName" DisplayMemberPath="FieldName"
+                        SelectedItem="" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
