@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="HtmlWinUI.Views.FileDetailPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:HtmlWinUI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Padding="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Header panel from IDetailHeader.HeaderView metadata -->
+        <controls:FormGroupsControl x:Name="HeaderGroups" Grid.Row="0" />
+
+        <!-- Tabbed detail area from DetailTabItems -->
+        <TabView x:Name="DetailTabs"
+                 Grid.Row="1"
+                 Margin="0,4,0,0"
+                 IsAddTabButtonVisible="False"
+                 CanDragTabs="False"
+                 CanReorderTabs="False" />
+    </Grid>
+</Page>

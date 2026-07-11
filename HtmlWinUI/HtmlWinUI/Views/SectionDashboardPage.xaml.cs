@@ -25,9 +25,12 @@ namespace HtmlWinUI.Views
             var section = (string)e.Parameter;
             // The MVC Files dashboard was headed "Files Search"; the others use the plain section name.
             HeadingText.Text = section == "Files" ? "Files Search" : section;
+            // Files search is implemented; the other sections (and Create) were
+            // scaffold placeholders in the MVC app and stay placeholders here.
+            var searchTarget = section == "Files" ? typeof(FilesSearchPage) : typeof(PlaceholderPage);
             DashboardList.ItemsSource = new List<DashboardItem>
             {
-                new DashboardItem("Search", "magnifying-glass", typeof(PlaceholderPage), $"{section} Search"),
+                new DashboardItem("Search", "magnifying-glass", searchTarget, $"{section} Search"),
                 new DashboardItem("Create", "plus", typeof(PlaceholderPage), $"{section} Create"),
             };
         }
