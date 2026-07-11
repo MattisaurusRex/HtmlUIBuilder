@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using System.Linq;
 using Microsoft.UI.Xaml.Media;
-using Windows.Foundation;
 
 namespace HtmlWinUI.ViewModels
 {
