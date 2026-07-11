@@ -7,18 +7,27 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Customers\**" />
+    <Compile Remove="Views\Invoices\**" />
+    <Compile Remove="Views\Quotes\**" />
+    <Content Remove="Views\Customers\**" />
+    <Content Remove="Views\Invoices\**" />
+    <Content Remove="Views\Quotes\**" />
+    <EmbeddedResource Remove="Views\Customers\**" />
+    <EmbeddedResource Remove="Views\Invoices\**" />
+    <EmbeddedResource Remove="Views\Quotes\**" />
+    <None Remove="Views\Customers\**" />
+    <None Remove="Views\Invoices\**" />
+    <None Remove="Views\Quotes\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="bootstrap" Version="5.3.3" />
     <PackageReference Include="jQuery" Version="3.7.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.DataAnnotations" Version="2.3.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
     <PackageReference Include="Microsoft.Web.Administration" Version="11.1.0" />
     <PackageReference Include="System.Text.Json" Version="9.0.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\Customers\" />
-    <Folder Include="Views\Invoices\" />
-    <Folder Include="Views\Quotes\" />
   </ItemGroup>
 
   <ItemGroup>
