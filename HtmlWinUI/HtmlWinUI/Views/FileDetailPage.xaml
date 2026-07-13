@@ -14,15 +14,651 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <!-- Header panel from IDetailHeader.HeaderView metadata -->
-        <controls:FormGroupsControl x:Name="HeaderGroups" Grid.Row="0" />
+        <!-- Header panel (FileDetailHeader.HeaderView) -->
+        <StackPanel Grid.Row="0" Margin="0,0,0,12">
+            <Border Style="{StaticResource GroupBodyStyle}">
+                <StackPanel>
+                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="304" ItemHeight="76">
+                        <TextBox Header="ID#" Text="{x:Bind EntityIdText}" Style="{StaticResource FieldTextBoxStyle}" />
+                        <TextBox Header="File Barcode" Text="{x:Bind Detail.FileBarcode, Mode=TwoWay}" Style="{StaticResource FieldTextBoxStyle}" />
+                    </VariableSizedWrapGrid>
+                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="178" Margin="0,4,0,4">
+                        <Button Content="Related Files" ToolTipService.ToolTip="Related Files" Style="{StaticResource BlueActionButtonStyle}" />
+                    </VariableSizedWrapGrid>
+                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="178" Margin="0,4,0,4">
+                        <Button Content="View Quote" ToolTipService.ToolTip="View Quote" Style="{StaticResource BlueActionButtonStyle}" />
+                    </VariableSizedWrapGrid>
+                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="304" ItemHeight="76">
+                        <TextBox Header="Case Reference" Text="{x:Bind Detail.CaseReference, Mode=TwoWay}" Style="{StaticResource FieldTextBoxStyle}" />
+                        <ComboBox Header="Split" ItemsSource="{x:Bind Detail.Split}" PlaceholderText="Select a Split" Style="{StaticResource FieldComboBoxStyle}" />
+                        <ComboBox Header="File Status" ItemsSource="{x:Bind Detail.FileStatus}" PlaceholderText="Select a File Status" Style="{StaticResource FieldComboBoxStyle}" />
+                    </VariableSizedWrapGrid>
+                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="178" Margin="0,4,0,4">
+                        <Button ToolTipService.ToolTip="File Folder" Style="{StaticResource BlueActionButtonStyle}">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <Image Source="ms-appx:///Assets/Images/folder.png" Width="16" Height="16" />
+                                <TextBlock Text="File Folder" />
+                            </StackPanel>
+                        </Button>
+                    </VariableSizedWrapGrid>
+                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="304" ItemHeight="76">
+                        <Grid ColumnSpacing="8" Margin="0,0,12,8" VerticalAlignment="Bottom">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBox Header="File Segments" Text="{x:Bind Detail.FileSegments, Mode=TwoWay}" />
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Bottom">
+                                <Button Content="Pick Segments" ToolTipService.ToolTip="Pick Segments" Style="{StaticResource OrangeActionButtonStyle}" />
+                            </StackPanel>
+                        </Grid>
+                    </VariableSizedWrapGrid>
+                </StackPanel>
+            </Border>
+        </StackPanel>
 
-        <!-- Tabbed detail area from DetailTabItems -->
+        <!-- Tabbed detail area, one TabViewItem per DetailTabItem -->
         <TabView x:Name="DetailTabs"
                  Grid.Row="1"
                  Margin="0,4,0,0"
                  IsAddTabButtonVisible="False"
                  CanDragTabs="False"
-                 CanReorderTabs="False" />
+                 CanReorderTabs="False">
+
+            <!-- Customer -->
+            <TabViewItem Header="Customer" IsClosable="False">
+                <TabViewItem.IconSource>
+                    <BitmapIconSource UriSource="ms-appx:///Assets/Images/customer.png" ShowAsMonochrome="False" />
+                </TabViewItem.IconSource>
+                <ScrollViewer>
+                    <StackPanel Padding="12">
+                        <StackPanel Margin="0,0,0,12">
+                            <Border Style="{StaticResource GroupBodyStyle}">
+                                <StackPanel>
+                                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="304" ItemHeight="76">
+                                        <Grid ColumnSpacing="8" Margin="0,0,12,8" VerticalAlignment="Bottom">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBox Header="Job Number" Text="{x:Bind CustomerTab.JobNo, Mode=TwoWay}" />
+                                            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Bottom">
+                                                <Button ToolTipService.ToolTip="Assign To Job" Style="{StaticResource PurpleActionButtonStyle}">
+                                                    <Image Source="ms-appx:///Assets/Images/binoculars.png" Width="16" Height="16" />
+                                                </Button>
+                                                <Button ToolTipService.ToolTip="Create Job" Style="{StaticResource PurpleActionButtonStyle}">
+                                                    <Image Source="ms-appx:///Assets/Images/plus-one.png" Width="16" Height="16" />
+                                                </Button>
+                                            </StackPanel>
+                                        </Grid>
+                                        <CalendarDatePicker Header="Job Date" Date="{x:Bind CustomerTab.JobDate, Converter={StaticResource DateConverter}, Mode=TwoWay}" Style="{StaticResource FieldDatePickerStyle}" />
+                                    </VariableSizedWrapGrid>
+                                    <StackPanel Margin="0,4,0,10">
+                                        <TextBlock Text="Customer" Style="{StaticResource TableLabelStyle}" />
+                                        <controls:SimpleTable ItemsSource="{x:Bind CustomerTab.Customer}" />
+                                    </StackPanel>
+                                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="304" ItemHeight="76">
+                                        <ComboBox Header="Delivery Method" ItemsSource="{x:Bind CustomerTab.DeliveryMethod}" PlaceholderText="Select a Delivery Method" Style="{StaticResource FieldComboBoxStyle}" />
+                                        <CheckBox Content="Report As Job" IsChecked="{x:Bind CustomerTab.ReportAsJob, Mode=TwoWay}" Style="{StaticResource FieldCheckBoxStyle}" />
+                                        <TextBox Header="Delivery Destination" Text="{x:Bind CustomerTab.DeliveryDestination, Mode=TwoWay}" Style="{StaticResource FieldTextBoxStyle}" />
+                                        <TextBox Header="Quote ID" Text="{x:Bind CustomerTab.QuoteID, Mode=TwoWay}" Style="{StaticResource FieldTextBoxStyle}" />
+                                    </VariableSizedWrapGrid>
+                                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="178" Margin="0,4,0,4">
+                                        <Button ToolTipService.ToolTip="Follow Up Email" Style="{StaticResource WhiteActionButtonStyle}">
+                                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                                <Image Source="ms-appx:///Assets/Images/email.png" Width="16" Height="16" />
+                                                <TextBlock Text="Follow Up Email" />
+                                            </StackPanel>
+                                        </Button>
+                                    </VariableSizedWrapGrid>
+                                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="304" ItemHeight="76">
+                                        <CheckBox Content="Follow Up Sent" IsChecked="{x:Bind CustomerTab.FollowUpSent, Mode=TwoWay}" Style="{StaticResource FieldCheckBoxStyle}" />
+                                    </VariableSizedWrapGrid>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                        <Button Content="Submit" Style="{StaticResource SubmitButtonStyle}" HorizontalAlignment="Left" Margin="0,4,0,12" />
+                    </StackPanel>
+                </ScrollViewer>
+            </TabViewItem>
+
+            <!-- Properties -->
+            <TabViewItem Header="Properties" IsClosable="False">
+                <TabViewItem.IconSource>
+                    <BitmapIconSource UriSource="ms-appx:///Assets/Images/folder.png" ShowAsMonochrome="False" />
+                </TabViewItem.IconSource>
+                <ScrollViewer>
+                    <StackPanel Padding="12">
+                        <StackPanel Margin="0,0,0,12">
+                            <Border Style="{StaticResource GroupHeadingBorderStyle}">
+                                <TextBlock Text="Collection" Style="{StaticResource GroupHeadingTextStyle}" />
+                            </Border>
+                            <Border Style="{StaticResource GroupBodyStyle}">
+                                <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="304" ItemHeight="76">
+                                    <CalendarDatePicker Header="Date Of Collection" Date="{x:Bind PropertiesTab.DateOfCollection, Converter={StaticResource DateConverter}, Mode=TwoWay}" Style="{StaticResource FieldDatePickerStyle}" />
+                                    <ComboBox Header="Collector" ItemsSource="{x:Bind PropertiesTab.Collector}" PlaceholderText="Select a Collector" Style="{StaticResource FieldComboBoxStyle}" />
+                                    <CheckBox Content="Collected By Us" IsChecked="{x:Bind PropertiesTab.CollectedByUs, Mode=TwoWay}" Style="{StaticResource FieldCheckBoxStyle}" />
+                                </VariableSizedWrapGrid>
+                            </Border>
+                        </StackPanel>
+                        <StackPanel Margin="0,0,0,12">
+                            <Border Style="{StaticResource GroupHeadingBorderStyle}">
+                                <TextBlock Text="Reporting Methods" Style="{StaticResource GroupHeadingTextStyle}" />
+                            </Border>
+                            <Border Style="{StaticResource GroupBodyStyle}">
+                                <StackPanel Margin="0,4,0,10">
+                                    <TextBlock Text="Reporting Methods" Style="{StaticResource TableLabelStyle}" />
+                                    <controls:SimpleTable ItemsSource="{x:Bind PropertiesTab.ReportingMethods}" />
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                        <StackPanel Margin="0,0,0,12">
+                            <Border Style="{StaticResource GroupHeadingBorderStyle}">
+                                <TextBlock Text="Treatments" Style="{StaticResource GroupHeadingTextStyle}" />
+                            </Border>
+                            <Border Style="{StaticResource GroupBodyStyle}">
+                                <StackPanel Margin="0,4,0,10">
+                                    <TextBlock Text="Treatments" Style="{StaticResource TableLabelStyle}" />
+                                    <controls:SimpleTable ItemsSource="{x:Bind PropertiesTab.Treatments}" />
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                        <StackPanel Margin="0,0,0,12">
+                            <Border Style="{StaticResource GroupHeadingBorderStyle}">
+                                <TextBlock Text="Checks" Style="{StaticResource GroupHeadingTextStyle}" />
+                            </Border>
+                            <Border Style="{StaticResource GroupBodyStyle}">
+                                <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="304" ItemHeight="76">
+                                    <CheckBox Content="Signed By Collector" IsChecked="{x:Bind PropertiesTab.SignedByCollector, Mode=TwoWay}" Style="{StaticResource FieldCheckBoxStyle}" />
+                                    <CheckBox Content="Signed By Patient" IsChecked="{x:Bind PropertiesTab.SignedByPatient, Mode=TwoWay}" Style="{StaticResource FieldCheckBoxStyle}" />
+                                    <CheckBox Content="Seal Intact" IsChecked="{x:Bind PropertiesTab.SealIntact, Mode=TwoWay}" Style="{StaticResource FieldCheckBoxStyle}" />
+                                </VariableSizedWrapGrid>
+                            </Border>
+                        </StackPanel>
+                        <StackPanel Margin="0,0,0,12">
+                            <Border Style="{StaticResource GroupHeadingBorderStyle}">
+                                <TextBlock Text="File Type" Style="{StaticResource GroupHeadingTextStyle}" />
+                            </Border>
+                            <Border Style="{StaticResource GroupBodyStyle}">
+                                <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="304" ItemHeight="76">
+                                    <ComboBox Header="Identification" ItemsSource="{x:Bind PropertiesTab.Identification}" PlaceholderText="Select a Identification" Style="{StaticResource FieldComboBoxStyle}" />
+                                    <ComboBox Header="ID Type" ItemsSource="{x:Bind PropertiesTab.IDType}" PlaceholderText="Select a ID Type" Style="{StaticResource FieldComboBoxStyle}" />
+                                    <ComboBox Header="Effective Type" ItemsSource="{x:Bind PropertiesTab.EffectiveType}" PlaceholderText="Select a Effective Type" Style="{StaticResource FieldComboBoxStyle}" />
+                                    <ComboBox Header="Folder Colour" ItemsSource="{x:Bind PropertiesTab.FolderColour}" PlaceholderText="Select a Folder Colour" Style="{StaticResource FieldComboBoxStyle}" />
+                                    <ComboBox Header="Document Type" ItemsSource="{x:Bind PropertiesTab.DocumentType}" PlaceholderText="Select a Document Type" Style="{StaticResource FieldComboBoxStyle}" />
+                                    <ComboBox Header="AB File" ItemsSource="{x:Bind PropertiesTab.ABFile}" PlaceholderText="Select a AB File" Style="{StaticResource FieldComboBoxStyle}" />
+                                </VariableSizedWrapGrid>
+                            </Border>
+                        </StackPanel>
+                        <StackPanel Margin="0,0,0,12">
+                            <Border Style="{StaticResource GroupHeadingBorderStyle}">
+                                <TextBlock Text="Other" Style="{StaticResource GroupHeadingTextStyle}" />
+                            </Border>
+                            <Border Style="{StaticResource GroupBodyStyle}">
+                                <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="304" ItemHeight="76">
+                                    <CalendarDatePicker Header="Received Date" Date="{x:Bind PropertiesTab.ReceivedDate, Converter={StaticResource DateConverter}, Mode=TwoWay}" Style="{StaticResource FieldDatePickerStyle}" />
+                                    <ComboBox Header="Testing Purpose" ItemsSource="{x:Bind PropertiesTab.TestingPurpose}" PlaceholderText="Select a Testing Purpose" Style="{StaticResource FieldComboBoxStyle}" />
+                                    <TextBox Header="Received Pages" Text="{x:Bind ReceivedPagesText}" Style="{StaticResource FieldTextBoxStyle}" />
+                                    <TextBox Header="Destruction Due" Text="{x:Bind PropertiesTab.DestructionDue, Mode=TwoWay}" Style="{StaticResource FieldTextBoxStyle}" />
+                                    <ComboBox Header="Destroyed By" ItemsSource="{x:Bind PropertiesTab.DestroyedBy}" PlaceholderText="Select a Destroyed By" Style="{StaticResource FieldComboBoxStyle}" />
+                                    <TextBox Header="Destruction List ID" Text="{x:Bind PropertiesTab.DestructionListID, Mode=TwoWay}" Style="{StaticResource FieldTextBoxStyle}" />
+                                </VariableSizedWrapGrid>
+                            </Border>
+                        </StackPanel>
+                        <StackPanel Margin="0,0,0,12">
+                            <Border Style="{StaticResource GroupHeadingBorderStyle}">
+                                <TextBlock Text="Customer OS #" Style="{StaticResource GroupHeadingTextStyle}" />
+                            </Border>
+                            <Border Style="{StaticResource GroupBodyStyle}">
+                                <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="304" ItemHeight="76">
+                                    <TextBox Header="Customer OS #" Text="{x:Bind PropertiesTab.CustomerOSNum, Mode=TwoWay}" Style="{StaticResource FieldTextBoxStyle}" />
+                                </VariableSizedWrapGrid>
+                            </Border>
+                        </StackPanel>
+                        <StackPanel Margin="0,0,0,12">
+                            <Border Style="{StaticResource GroupHeadingBorderStyle}">
+                                <TextBlock Text="Sub-Section" Style="{StaticResource GroupHeadingTextStyle}" />
+                            </Border>
+                            <Border Style="{StaticResource GroupBodyStyle}">
+                                <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="304" ItemHeight="76">
+                                    <ComboBox Header="Sub-Section" ItemsSource="{x:Bind PropertiesTab.SubSection}" PlaceholderText="Select a Sub-Section" Style="{StaticResource FieldComboBoxStyle}" />
+                                </VariableSizedWrapGrid>
+                            </Border>
+                        </StackPanel>
+                        <StackPanel Margin="0,0,0,12">
+                            <Border Style="{StaticResource GroupHeadingBorderStyle}">
+                                <TextBlock Text="Identification Method" Style="{StaticResource GroupHeadingTextStyle}" />
+                            </Border>
+                            <Border Style="{StaticResource GroupBodyStyle}">
+                                <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="304" ItemHeight="76">
+                                    <ComboBox Header="Identification Method" ItemsSource="{x:Bind PropertiesTab.IdentificationMethod}" PlaceholderText="Select a Identification Method" Style="{StaticResource FieldComboBoxStyle}" />
+                                </VariableSizedWrapGrid>
+                            </Border>
+                        </StackPanel>
+                        <Button Content="Submit" Style="{StaticResource SubmitButtonStyle}" HorizontalAlignment="Left" Margin="0,4,0,12" />
+                    </StackPanel>
+                </ScrollViewer>
+            </TabViewItem>
+
+            <!-- Patient -->
+            <TabViewItem Header="Patient" IsClosable="False">
+                <TabViewItem.IconSource>
+                    <BitmapIconSource UriSource="ms-appx:///Assets/Images/man.png" ShowAsMonochrome="False" />
+                </TabViewItem.IconSource>
+                <ScrollViewer>
+                    <StackPanel Padding="12">
+                        <StackPanel Margin="0,0,0,12">
+                            <Border Style="{StaticResource GroupBodyStyle}">
+                                <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="304" ItemHeight="76">
+                                    <Grid ColumnSpacing="8" Margin="0,0,12,8" VerticalAlignment="Bottom">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBox Header="PatientID" Text="{x:Bind PatientTab.PatientID, Mode=TwoWay}" />
+                                        <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Bottom">
+                                            <Button ToolTipService.ToolTip="Search Patient" Style="{StaticResource PurpleActionButtonStyle}">
+                                                <Image Source="ms-appx:///Assets/Images/telescope-look.png" Width="16" Height="16" />
+                                            </Button>
+                                            <Button ToolTipService.ToolTip="Auto Select Anon" Style="{StaticResource PurpleActionButtonStyle}">
+                                                <Image Source="ms-appx:///Assets/Images/smile.png" Width="16" Height="16" />
+                                            </Button>
+                                            <Button ToolTipService.ToolTip="Use Barcode As Patient Name" Style="{StaticResource PurpleActionButtonStyle}">
+                                                <Image Source="ms-appx:///Assets/Images/barcode-search.png" Width="16" Height="16" />
+                                            </Button>
+                                        </StackPanel>
+                                    </Grid>
+                                    <TextBox Header="Forename" Text="{x:Bind PatientTab.Forename, Mode=TwoWay}" Style="{StaticResource FieldTextBoxStyle}" />
+                                    <TextBox Header="Surname" Text="{x:Bind PatientTab.Surname, Mode=TwoWay}" Style="{StaticResource FieldTextBoxStyle}" />
+                                    <TextBox Header="Gender" Text="{x:Bind PatientTab.Gender, Mode=TwoWay}" Style="{StaticResource FieldTextBoxStyle}" />
+                                    <CalendarDatePicker Header="DOB" Date="{x:Bind PatientTab.DOB, Converter={StaticResource DateConverter}, Mode=TwoWay}" Style="{StaticResource FieldDatePickerStyle}" />
+                                    <TextBox Header="NI" Text="{x:Bind PatientTab.NI, Mode=TwoWay}" Style="{StaticResource FieldTextBoxStyle}" />
+                                    <TextBox Header="Passport" Text="{x:Bind PatientTab.Passport, Mode=TwoWay}" Style="{StaticResource FieldTextBoxStyle}" />
+                                    <TextBox Header="Driving Licence" Text="{x:Bind PatientTab.DrivingLicence, Mode=TwoWay}" Style="{StaticResource FieldTextBoxStyle}" />
+                                    <TextBox Header="ID4" Text="{x:Bind PatientTab.ID4, Mode=TwoWay}" Style="{StaticResource FieldTextBoxStyle}" />
+                                    <CheckBox Content="Difficult Patient" IsChecked="{x:Bind PatientTab.DifficultPatient, Mode=TwoWay}" Style="{StaticResource FieldCheckBoxStyle}" />
+                                </VariableSizedWrapGrid>
+                            </Border>
+                        </StackPanel>
+                        <Button Content="Submit" Style="{StaticResource SubmitButtonStyle}" HorizontalAlignment="Left" Margin="0,4,0,12" />
+                    </StackPanel>
+                </ScrollViewer>
+            </TabViewItem>
+
+            <!-- Sections -->
+            <TabViewItem Header="Sections" IsClosable="False">
+                <TabViewItem.IconSource>
+                    <BitmapIconSource UriSource="ms-appx:///Assets/Images/ruler.png" ShowAsMonochrome="False" />
+                </TabViewItem.IconSource>
+                <ScrollViewer>
+                    <StackPanel Padding="12">
+                        <StackPanel Margin="0,0,0,12">
+                            <Border Style="{StaticResource GroupHeadingBorderStyle}">
+                                <TextBlock Text="Sections" Style="{StaticResource GroupHeadingTextStyle}" />
+                            </Border>
+                            <Border Style="{StaticResource GroupBodyStyle}">
+                                <StackPanel>
+                                    <StackPanel Margin="0,4,0,10">
+                                        <TextBlock Text="Sections" Style="{StaticResource TableLabelStyle}" />
+                                        <controls:SimpleTable ItemsSource="{x:Bind SectionsTab.Sections}" />
+                                    </StackPanel>
+                                    <StackPanel Margin="0,4,0,10">
+                                        <TextBlock Text="Section Notes" Style="{StaticResource TableLabelStyle}" />
+                                        <controls:SimpleTable ItemsSource="{x:Bind SectionsTab.SectionNotes}" />
+                                    </StackPanel>
+                                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="178" Margin="0,4,0,4">
+                                        <Button Content="Add" ToolTipService.ToolTip="Add" Style="{StaticResource PurpleActionButtonStyle}" />
+                                        <Button Content="Copy" ToolTipService.ToolTip="Copy" Style="{StaticResource PurpleActionButtonStyle}" />
+                                        <Button Content="Copy C of F" ToolTipService.ToolTip="Copy C of F" Style="{StaticResource PurpleActionButtonStyle}" />
+                                        <Button Content="Add Type" ToolTipService.ToolTip="Add Type" Style="{StaticResource PurpleActionButtonStyle}" />
+                                        <Button Content="Versions" ToolTipService.ToolTip="Versions" Style="{StaticResource PurpleActionButtonStyle}" />
+                                        <Button Content="Audit trail" ToolTipService.ToolTip="Audit trail" Style="{StaticResource PurpleActionButtonStyle}" />
+                                        <Button Content="Up-Issue" ToolTipService.ToolTip="Up-Issue" Style="{StaticResource PurpleActionButtonStyle}" />
+                                        <Button Content="Down-" ToolTipService.ToolTip="Down-Issue" Style="{StaticResource PurpleActionButtonStyle}" />
+                                    </VariableSizedWrapGrid>
+                                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="304" ItemHeight="76">
+                                        <Grid ColumnSpacing="8" Margin="0,0,12,8" VerticalAlignment="Bottom">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <ComboBox Header="C of F Notes" ItemsSource="{x:Bind SectionsTab.COfFNotes}" PlaceholderText="Select a C of F Notes" HorizontalAlignment="Stretch" />
+                                            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Bottom">
+                                                <Button ToolTipService.ToolTip="Spell Check" Style="{StaticResource BlueActionButtonStyle}">
+                                                    <Image Source="ms-appx:///Assets/Images/tick-abc.png" Width="16" Height="16" />
+                                                </Button>
+                                                <Button Content="Add Note" ToolTipService.ToolTip="Add Note" Style="{StaticResource PurpleActionButtonStyle}" />
+                                            </StackPanel>
+                                        </Grid>
+                                    </VariableSizedWrapGrid>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                        <StackPanel Margin="0,0,0,12">
+                            <Border Style="{StaticResource GroupHeadingBorderStyle}">
+                                <TextBlock Text="Tests" Style="{StaticResource GroupHeadingTextStyle}" />
+                            </Border>
+                            <Border Style="{StaticResource GroupBodyStyle}">
+                                <StackPanel>
+                                    <StackPanel Margin="0,4,0,10">
+                                        <TextBlock Text="Tests" Style="{StaticResource TableLabelStyle}" />
+                                        <controls:SimpleTable ItemsSource="{x:Bind SectionsTab.Tests}" />
+                                    </StackPanel>
+                                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="178" Margin="0,4,0,4">
+                                        <Button Content="Add tests" ToolTipService.ToolTip="Add Tests" Style="{StaticResource PurpleActionButtonStyle}" />
+                                        <Button Content="Audit trail" ToolTipService.ToolTip="Audit Trail" Style="{StaticResource PurpleActionButtonStyle}" />
+                                    </VariableSizedWrapGrid>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                        <Button Content="Submit" Style="{StaticResource SubmitButtonStyle}" HorizontalAlignment="Left" Margin="0,4,0,12" />
+                    </StackPanel>
+                </ScrollViewer>
+            </TabViewItem>
+
+            <!-- Medications -->
+            <TabViewItem Header="Medications" IsClosable="False">
+                <TabViewItem.IconSource>
+                    <BitmapIconSource UriSource="ms-appx:///Assets/Images/drugs.png" ShowAsMonochrome="False" />
+                </TabViewItem.IconSource>
+                <ScrollViewer>
+                    <StackPanel Padding="12">
+                        <StackPanel Margin="0,0,0,12">
+                            <Border Style="{StaticResource GroupBodyStyle}">
+                                <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="178" Margin="0,4,0,4">
+                                    <Button Content="Medication" ToolTipService.ToolTip="Medication" Style="{StaticResource PurpleActionButtonStyle}" />
+                                </VariableSizedWrapGrid>
+                            </Border>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabViewItem>
+
+            <!-- Tools -->
+            <TabViewItem Header="Tools" IsClosable="False">
+                <TabViewItem.IconSource>
+                    <BitmapIconSource UriSource="ms-appx:///Assets/Images/tool-box.png" ShowAsMonochrome="False" />
+                </TabViewItem.IconSource>
+                <ScrollViewer>
+                    <StackPanel Padding="12">
+                        <StackPanel Margin="0,0,0,12">
+                            <Border Style="{StaticResource GroupBodyStyle}">
+                                <StackPanel>
+                                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="178" Margin="0,4,0,4">
+                                        <Button ToolTipService.ToolTip="Release File" Style="{StaticResource PurpleActionButtonStyle}">
+                                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                                <Image Source="ms-appx:///Assets/Images/play.png" Width="16" Height="16" />
+                                                <TextBlock Text="Release File" />
+                                            </StackPanel>
+                                        </Button>
+                                        <Button ToolTipService.ToolTip="Copy File" Style="{StaticResource PurpleActionButtonStyle}">
+                                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                                <Image Source="ms-appx:///Assets/Images/copy.png" Width="16" Height="16" />
+                                                <TextBlock Text="Copy File" />
+                                            </StackPanel>
+                                        </Button>
+                                        <Button ToolTipService.ToolTip="Clone File" Style="{StaticResource PurpleActionButtonStyle}">
+                                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                                <Image Source="ms-appx:///Assets/Images/copy.png" Width="16" Height="16" />
+                                                <TextBlock Text="Clone File" />
+                                            </StackPanel>
+                                        </Button>
+                                    </VariableSizedWrapGrid>
+                                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="178" Margin="0,4,0,4">
+                                        <Button ToolTipService.ToolTip="View Audit Trail" Style="{StaticResource PurpleActionButtonStyle}">
+                                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                                <Image Source="ms-appx:///Assets/Images/clipboard.png" Width="16" Height="16" />
+                                                <TextBlock Text="View Audit Trail" />
+                                            </StackPanel>
+                                        </Button>
+                                        <Button ToolTipService.ToolTip="C of F Versions" Style="{StaticResource PurpleActionButtonStyle}">
+                                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                                <Image Source="ms-appx:///Assets/Images/version.png" Width="16" Height="16" />
+                                                <TextBlock Text="C of F Versions" />
+                                            </StackPanel>
+                                        </Button>
+                                        <Button ToolTipService.ToolTip="File Actions Report" Style="{StaticResource PurpleActionButtonStyle}">
+                                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                                <Image Source="ms-appx:///Assets/Images/report.png" Width="16" Height="16" />
+                                                <TextBlock Text="File Actions Report" />
+                                            </StackPanel>
+                                        </Button>
+                                    </VariableSizedWrapGrid>
+                                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="178" Margin="0,4,0,4">
+                                        <Button ToolTipService.ToolTip="Send Results" Style="{StaticResource OrangeActionButtonStyle}">
+                                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                                <Image Source="ms-appx:///Assets/Images/send-email.png" Width="16" Height="16" />
+                                                <TextBlock Text="(Re)Send Results" />
+                                            </StackPanel>
+                                        </Button>
+                                    </VariableSizedWrapGrid>
+                                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="178" Margin="0,4,0,4">
+                                        <Button ToolTipService.ToolTip="Positive Papers" Style="{StaticResource BlueActionButtonStyle}">
+                                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                                <Image Source="ms-appx:///Assets/Images/notes.png" Width="16" Height="16" />
+                                                <TextBlock Text="Positive Papers" />
+                                            </StackPanel>
+                                        </Button>
+                                    </VariableSizedWrapGrid>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                        <StackPanel Margin="0,0,0,12">
+                            <Border Style="{StaticResource GroupHeadingBorderStyle}">
+                                <TextBlock Text="WI Tools" Style="{StaticResource GroupHeadingTextStyle}" />
+                            </Border>
+                            <Border Style="{StaticResource GroupBodyStyle}">
+                                <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="178" Margin="0,4,0,4">
+                                    <Button ToolTipService.ToolTip="WI Wizard" Style="{StaticResource GreenActionButtonStyle}">
+                                        <StackPanel Orientation="Horizontal" Spacing="6">
+                                            <Image Source="ms-appx:///Assets/Images/wizard.png" Width="16" Height="16" />
+                                            <TextBlock Text="1. WI Wizard" />
+                                        </StackPanel>
+                                    </Button>
+                                    <Button Content="2. Convert to PDF" ToolTipService.ToolTip="Convert to PDF" Style="{StaticResource BlueActionButtonStyle}" />
+                                    <Button ToolTipService.ToolTip="Finalise WI" Style="{StaticResource BlueActionButtonStyle}">
+                                        <StackPanel Orientation="Horizontal" Spacing="6">
+                                            <Image Source="ms-appx:///Assets/Images/copy-red.png" Width="16" Height="16" />
+                                            <TextBlock Text="3. Finalise WI" />
+                                        </StackPanel>
+                                    </Button>
+                                    <Button ToolTipService.ToolTip="Deliver WI" Style="{StaticResource BlueActionButtonStyle}">
+                                        <StackPanel Orientation="Horizontal" Spacing="6">
+                                            <Image Source="ms-appx:///Assets/Images/email.png" Width="16" Height="16" />
+                                            <TextBlock Text="4. Deliver" />
+                                        </StackPanel>
+                                    </Button>
+                                </VariableSizedWrapGrid>
+                            </Border>
+                        </StackPanel>
+                        <StackPanel Margin="0,0,0,12">
+                            <Border Style="{StaticResource GroupHeadingBorderStyle}">
+                                <TextBlock Text="Update IDs" Style="{StaticResource GroupHeadingTextStyle}" />
+                            </Border>
+                            <Border Style="{StaticResource GroupBodyStyle}">
+                                <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="178" Margin="0,4,0,4">
+                                    <Button ToolTipService.ToolTip="Update IDs" Style="{StaticResource PurpleActionButtonStyle}">
+                                        <StackPanel Orientation="Horizontal" Spacing="6">
+                                            <Image Source="ms-appx:///Assets/Images/bar-chart.png" Width="16" Height="16" />
+                                            <TextBlock Text="Update IDs" />
+                                        </StackPanel>
+                                    </Button>
+                                </VariableSizedWrapGrid>
+                            </Border>
+                        </StackPanel>
+                        <StackPanel Margin="0,0,0,12">
+                            <Border Style="{StaticResource GroupHeadingBorderStyle}">
+                                <TextBlock Text="Sections" Style="{StaticResource GroupHeadingTextStyle}" />
+                            </Border>
+                            <Border Style="{StaticResource GroupBodyStyle}">
+                                <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="178" Margin="0,4,0,4">
+                                    <Button ToolTipService.ToolTip="Deleted Sections" Style="{StaticResource BlueActionButtonStyle}">
+                                        <StackPanel Orientation="Horizontal" Spacing="6">
+                                            <Image Source="ms-appx:///Assets/Images/recycle-bin.png" Width="16" Height="16" />
+                                            <TextBlock Text="Deleted Sections" />
+                                        </StackPanel>
+                                    </Button>
+                                </VariableSizedWrapGrid>
+                            </Border>
+                        </StackPanel>
+                        <StackPanel Margin="0,0,0,12">
+                            <Border Style="{StaticResource GroupHeadingBorderStyle}">
+                                <TextBlock Text="DELETE File" Style="{StaticResource GroupHeadingTextStyle}" />
+                            </Border>
+                            <Border Style="{StaticResource GroupBodyStyle}">
+                                <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="178" Margin="0,4,0,4">
+                                    <Button ToolTipService.ToolTip="Delete File" Style="{StaticResource BlueActionButtonStyle}">
+                                        <Image Source="ms-appx:///Assets/Images/x-button.png" Width="16" Height="16" />
+                                    </Button>
+                                </VariableSizedWrapGrid>
+                            </Border>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabViewItem>
+
+            <!-- Notes -->
+            <TabViewItem Header="Notes" IsClosable="False">
+                <TabViewItem.IconSource>
+                    <BitmapIconSource UriSource="ms-appx:///Assets/Images/notes.png" ShowAsMonochrome="False" />
+                </TabViewItem.IconSource>
+                <ScrollViewer>
+                    <StackPanel Padding="12">
+                        <StackPanel Margin="0,0,0,12">
+                            <Border Style="{StaticResource GroupHeadingBorderStyle}">
+                                <TextBlock Text="File notes" Style="{StaticResource GroupHeadingTextStyle}" />
+                            </Border>
+                            <Border Style="{StaticResource GroupBodyStyle}">
+                                <StackPanel>
+                                    <StackPanel Margin="0,4,0,10">
+                                        <TextBlock Text="File Notes" Style="{StaticResource TableLabelStyle}" />
+                                        <controls:SimpleTable ItemsSource="{x:Bind NotesTab.FileNotes}" />
+                                    </StackPanel>
+                                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="178" Margin="0,4,0,4">
+                                        <Button ToolTipService.ToolTip="Add File Note" Style="{StaticResource WhiteActionButtonStyle}">
+                                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                                <Image Source="ms-appx:///Assets/Images/sticky-notes.png" Width="16" Height="16" />
+                                                <TextBlock Text="Add File Note" />
+                                            </StackPanel>
+                                        </Button>
+                                    </VariableSizedWrapGrid>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                        <StackPanel Margin="0,0,0,12">
+                            <Border Style="{StaticResource GroupHeadingBorderStyle}">
+                                <TextBlock Text="Quotation notes" Style="{StaticResource GroupHeadingTextStyle}" />
+                            </Border>
+                            <Border Style="{StaticResource GroupBodyStyle}">
+                                <StackPanel Margin="0,4,0,10">
+                                    <TextBlock Text="Quotation Notes" Style="{StaticResource TableLabelStyle}" />
+                                    <controls:SimpleTable ItemsSource="{x:Bind NotesTab.QuotationNotes}" />
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                        <StackPanel Margin="0,0,0,12">
+                            <Border Style="{StaticResource GroupHeadingBorderStyle}">
+                                <TextBlock Text="Collection notes" Style="{StaticResource GroupHeadingTextStyle}" />
+                            </Border>
+                            <Border Style="{StaticResource GroupBodyStyle}">
+                                <StackPanel>
+                                    <StackPanel Margin="0,4,0,10">
+                                        <TextBlock Text="Collection Notes" Style="{StaticResource TableLabelStyle}" />
+                                        <controls:SimpleTable ItemsSource="{x:Bind NotesTab.CollectionNotes}" />
+                                    </StackPanel>
+                                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="178" Margin="0,4,0,4">
+                                        <Button ToolTipService.ToolTip="Notes Report" Style="{StaticResource BlueActionButtonStyle}">
+                                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                                <Image Source="ms-appx:///Assets/Images/email.png" Width="16" Height="16" />
+                                                <TextBlock Text="Notes Report" />
+                                            </StackPanel>
+                                        </Button>
+                                    </VariableSizedWrapGrid>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                        <Button Content="Submit" Style="{StaticResource SubmitButtonStyle}" HorizontalAlignment="Left" Margin="0,4,0,12" />
+                    </StackPanel>
+                </ScrollViewer>
+            </TabViewItem>
+
+            <!-- Info -->
+            <TabViewItem Header="Info" IsClosable="False">
+                <TabViewItem.IconSource>
+                    <BitmapIconSource UriSource="ms-appx:///Assets/Images/information.png" ShowAsMonochrome="False" />
+                </TabViewItem.IconSource>
+                <ScrollViewer>
+                    <StackPanel Padding="12">
+                        <StackPanel Margin="0,0,0,12">
+                            <Border Style="{StaticResource GroupBodyStyle}">
+                                <StackPanel>
+                                    <StackPanel Margin="0,4,0,10">
+                                        <TextBlock Text="Info Other" Style="{StaticResource TableLabelStyle}" />
+                                        <controls:SimpleTable ItemsSource="{x:Bind InfoTab.InfoOther}" />
+                                    </StackPanel>
+                                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="304" ItemHeight="76">
+                                        <ComboBox Header="Overall Qualitative Result" ItemsSource="{x:Bind InfoTab.OverallQualitativeResult}" PlaceholderText="Select a Overall Qualitative Result" Style="{StaticResource FieldComboBoxStyle}" />
+                                        <ComboBox Header="File Name Prefix" ItemsSource="{x:Bind InfoTab.FileNamePrefix}" PlaceholderText="Select a File Name Prefix" Style="{StaticResource FieldComboBoxStyle}" />
+                                    </VariableSizedWrapGrid>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                        <Button Content="Submit" Style="{StaticResource SubmitButtonStyle}" HorizontalAlignment="Left" Margin="0,4,0,12" />
+                    </StackPanel>
+                </ScrollViewer>
+            </TabViewItem>
+
+            <!-- Attachments -->
+            <TabViewItem Header="Attachments" IsClosable="False">
+                <TabViewItem.IconSource>
+                    <BitmapIconSource UriSource="ms-appx:///Assets/Images/paperclip.png" ShowAsMonochrome="False" />
+                </TabViewItem.IconSource>
+                <ScrollViewer>
+                    <StackPanel Padding="12">
+                        <StackPanel Margin="0,0,0,12">
+                            <Border Style="{StaticResource GroupBodyStyle}">
+                                <StackPanel>
+                                    <StackPanel Margin="0,4,0,10">
+                                        <TextBlock Text="Attachments" Style="{StaticResource TableLabelStyle}" />
+                                        <controls:SimpleTable ItemsSource="{x:Bind AttachmentsTab.Attachments}" />
+                                    </StackPanel>
+                                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="178" Margin="0,4,0,4">
+                                        <Button ToolTipService.ToolTip="Attach" Style="{StaticResource BrownActionButtonStyle}">
+                                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                                <Image Source="ms-appx:///Assets/Images/paperclip.png" Width="16" Height="16" />
+                                                <TextBlock Text="Attach" />
+                                            </StackPanel>
+                                        </Button>
+                                        <Button ToolTipService.ToolTip="Open" Style="{StaticResource GreenActionButtonStyle}">
+                                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                                <Image Source="ms-appx:///Assets/Images/notes.png" Width="16" Height="16" />
+                                                <TextBlock Text="Open" />
+                                            </StackPanel>
+                                        </Button>
+                                        <Button ToolTipService.ToolTip="Deliver" Style="{StaticResource OrangeActionButtonStyle}">
+                                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                                <Image Source="ms-appx:///Assets/Images/email.png" Width="16" Height="16" />
+                                                <TextBlock Text="Deliver" />
+                                            </StackPanel>
+                                        </Button>
+                                        <Button ToolTipService.ToolTip="Popout" Style="{StaticResource PurpleActionButtonStyle}">
+                                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                                <Image Source="ms-appx:///Assets/Images/arrow-up.png" Width="16" Height="16" />
+                                                <TextBlock Text="Popout" />
+                                            </StackPanel>
+                                        </Button>
+                                    </VariableSizedWrapGrid>
+                                    <StackPanel Margin="0,4,0,10">
+                                        <TextBlock Text="Email Log" Style="{StaticResource TableLabelStyle}" />
+                                        <controls:SimpleTable ItemsSource="{x:Bind AttachmentsTab.EmailLogSub}" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                        <Button Content="Submit" Style="{StaticResource SubmitButtonStyle}" HorizontalAlignment="Left" Margin="0,4,0,12" />
+                    </StackPanel>
+                </ScrollViewer>
+            </TabViewItem>
+        </TabView>
     </Grid>
 </Page>

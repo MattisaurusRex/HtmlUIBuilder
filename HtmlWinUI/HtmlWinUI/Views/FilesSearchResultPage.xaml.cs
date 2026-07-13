@@ -23,8 +23,7 @@ namespace HtmlWinUI.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            var results = (List<FileEntity>)e.Parameter;
-            ResultsTable.Table = FormFieldFactory.BuildTable(results, showViewButton: true);
+            ResultsTable.ItemsSource = (List<FileEntity>)e.Parameter;
         }
     }
 }

@@ -1,19 +1,31 @@
-using System;
-using Microsoft.UI.Xaml;
+using System.Linq;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
-using HtmlWinUI.Controls;
+using HtmlWinUI.Models.Details;
+using HtmlWinUI.Models.Details.Files;
 using HtmlWinUI.Services;
 
 namespace HtmlWinUI.Views
 {
     /// <summary>
     /// File detail screen (ported from Views/Files/Details.cshtml): header panel
-    /// from FileDetailHeader.HeaderView plus one tab per DetailTabItem.
+    /// plus one tab per detail tab item, all laid out in FileDetailPage.xaml.
     /// Navigation parameter: the file id.
     /// </summary>
     public sealed partial class FileDetailPage : Page
     {
+        public FileDetailHeader Detail { get; private set; } = new();
+        public FileDetailCustomer CustomerTab { get; private set; } = new();
+        public FileDetailProperties PropertiesTab { get; private set; } = new();
+        public FileDetailPatient PatientTab { get; private set; } = new();
+        public FileDetailSections SectionsTab { get; private set; } = new();
+        public FileDetailNotes NotesTab { get; private set; } = new();
+        public FileDetailInfo InfoTab { get; private set; } = new();
+        public FileDetailAttachments AttachmentsTab { get; private set; } = new();
+
+        public string EntityIdText => Detail.EntityID.ToString();
+        public string ReceivedPagesText => PropertiesTab.ReceivedPages.ToString();
+
         public FileDetailPage()
         {
             InitializeComponent();
@@ -22,40 +34,21 @@ namespace HtmlWinUI.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            var header = SampleDataService.GetFileDetail((int)e.Parameter);
-
-            HeaderGroups.Groups = FormFieldFactory.BuildHeaderGroups(header);
-
-            DetailTabs.TabItems.Clear();
-            foreach (var tab in header.DetailTabItems)
-            {
-                var groups = FormFieldFactory.BuildGroups(tab);
-                var content = new StackPanel { Padding = new Thickness(12) };
-                content.Children.Add(new FormGroupsControl { Groups = groups });
-                if (FormFieldFactory.HasInputs(groups))
-                {
-                    content.Children.Add(new Button
-                    {
-                        Content = "Submit",
-                        Style = (Style)Application.Current.Resources["SubmitButtonStyle"],
-                        HorizontalAlignment = HorizontalAlignment.Left,
-                        Margin = new Thickness(0, 4, 0, 12),
-                    });
-                }
-
-                DetailTabs.TabItems.Add(new TabViewItem
-                {
-                    Header = tab.PageHeading,
-                    IsClosable = false,
-                    IconSource = new BitmapIconSource
-                    {
-                        UriSource = new Uri($"ms-appx:///Assets/Images/{tab.IconType}.png"),
-                        ShowAsMonochrome = false,
-                    },
-                    Content = new ScrollViewer { Content = content },
-                });
-            }
+            Detail = SampleDataService.GetFileDetail((int)e.Parameter);
+            CustomerTab = Tab<FileDetailCustomer>();
+            PropertiesTab = Tab<FileDetailProperties>();
+            PatientTab = Tab<FileDetailPatient>();
+            SectionsTab = Tab<FileDetailSections>();
+            NotesTab = Tab<FileDetailNotes>();
+            InfoTab = Tab<FileDetailInfo>();
+            AttachmentsTab = Tab<FileDetailAttachments>();
+            Bindings.Update();
             DetailTabs.SelectedIndex = 0;
+        }
+
+        private T Tab<T>() where T : class, IDetailTabItem, new()
+        {
+            return Detail.DetailTabItems.OfType<T>().FirstOrDefault() ?? new T();
         }
     }
 }

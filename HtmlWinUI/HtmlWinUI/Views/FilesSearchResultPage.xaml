@@ -11,7 +11,7 @@
     <ScrollViewer>
         <StackPanel Padding="24">
             <TextBlock Text="File Search Results" Style="{StaticResource PageTitleStyle}" />
-            <controls:SimpleTable x:Name="ResultsTable" HorizontalAlignment="Left" />
+            <controls:SimpleTable x:Name="ResultsTable" ShowViewButton="True" HorizontalAlignment="Left" />
         </StackPanel>
     </ScrollViewer>
 </Page>
