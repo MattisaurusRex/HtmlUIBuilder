@@ -7,8 +7,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <ScrollViewer>
-        <StackPanel Padding="24" MaxWidth="1200">
+    <!-- Fixed 1908px design width (6 field columns per group); the Viewbox scales
+         the whole form up or down so it always fits one screen without scrolling. -->
+    <Viewbox Stretch="Uniform" Margin="12">
+        <StackPanel Padding="24" Width="1908">
             <TextBlock Text="Files Search" Style="{StaticResource PageTitleStyle}" />
 
             <!-- Client -->
@@ -101,7 +103,7 @@
                     Click="Submit_Click"
                     Style="{StaticResource SubmitButtonStyle}"
                     HorizontalAlignment="Center"
-                    Margin="0,8,0,24" />
+                    Margin="0,8,0,0" />
         </StackPanel>
-    </ScrollViewer>
+    </Viewbox>
 </Page>

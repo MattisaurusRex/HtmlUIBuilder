@@ -15,7 +15,7 @@
         </Grid.RowDefinitions>
 
         <!-- Header panel (FileDetailHeader.HeaderView) -->
-        <StackPanel Grid.Row="0" Margin="0,0,0,12">
+        <StackPanel Grid.Row="0" Margin="0,0,0,12" Name="FileHeaderView">
             <Border Style="{StaticResource GroupBodyStyle}">
                 <StackPanel>
                     <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="304" ItemHeight="76">
