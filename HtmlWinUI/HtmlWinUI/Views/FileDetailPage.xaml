@@ -14,35 +14,26 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <!-- Header panel (FileDetailHeader.HeaderView) -->
-        <StackPanel Grid.Row="0" Margin="0,0,0,12" Name="FileHeaderView">
-            <Border Style="{StaticResource GroupBodyStyle}">
-                <StackPanel>
-                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="304" ItemHeight="76">
+        <!-- Header panel (FileDetailHeader.HeaderView): fixed 1908px design width in
+             7 columns, scaled by the Viewbox to the window width, never above 500px tall. -->
+        <Viewbox Grid.Row="0" Stretch="Uniform" MaxHeight="500" Margin="0,0,0,12">
+            <StackPanel Name="FileHeaderView" Width="1908">
+                <Border Style="{StaticResource GroupBodyStyle}">
+                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="266" ItemHeight="76">
                         <TextBox Header="ID#" Text="{x:Bind EntityIdText}" Style="{StaticResource FieldTextBoxStyle}" />
                         <TextBox Header="File Barcode" Text="{x:Bind Detail.FileBarcode, Mode=TwoWay}" Style="{StaticResource FieldTextBoxStyle}" />
-                    </VariableSizedWrapGrid>
-                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="178" Margin="0,4,0,4">
-                        <Button Content="Related Files" ToolTipService.ToolTip="Related Files" Style="{StaticResource BlueActionButtonStyle}" />
-                    </VariableSizedWrapGrid>
-                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="178" Margin="0,4,0,4">
-                        <Button Content="View Quote" ToolTipService.ToolTip="View Quote" Style="{StaticResource BlueActionButtonStyle}" />
-                    </VariableSizedWrapGrid>
-                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="304" ItemHeight="76">
+                        <Button Content="Related Files" ToolTipService.ToolTip="Related Files" VerticalAlignment="Bottom" Style="{StaticResource BlueActionButtonStyle}" />
+                        <Button Content="View Quote" ToolTipService.ToolTip="View Quote" VerticalAlignment="Bottom" Style="{StaticResource BlueActionButtonStyle}" />
                         <TextBox Header="Case Reference" Text="{x:Bind Detail.CaseReference, Mode=TwoWay}" Style="{StaticResource FieldTextBoxStyle}" />
                         <ComboBox Header="Split" ItemsSource="{x:Bind Detail.Split}" PlaceholderText="Select a Split" Style="{StaticResource FieldComboBoxStyle}" />
                         <ComboBox Header="File Status" ItemsSource="{x:Bind Detail.FileStatus}" PlaceholderText="Select a File Status" Style="{StaticResource FieldComboBoxStyle}" />
-                    </VariableSizedWrapGrid>
-                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="178" Margin="0,4,0,4">
-                        <Button ToolTipService.ToolTip="File Folder" Style="{StaticResource BlueActionButtonStyle}">
+                        <Button ToolTipService.ToolTip="File Folder" VerticalAlignment="Bottom" Style="{StaticResource BlueActionButtonStyle}">
                             <StackPanel Orientation="Horizontal" Spacing="6">
                                 <Image Source="ms-appx:///Assets/Images/folder.png" Width="16" Height="16" />
                                 <TextBlock Text="File Folder" />
                             </StackPanel>
                         </Button>
-                    </VariableSizedWrapGrid>
-                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="304" ItemHeight="76">
-                        <Grid ColumnSpacing="8" Margin="0,0,12,8" VerticalAlignment="Bottom">
+                        <Grid ColumnSpacing="8" Margin="0,0,12,8" VerticalAlignment="Bottom" VariableSizedWrapGrid.ColumnSpan="2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
@@ -53,9 +44,9 @@
                             </StackPanel>
                         </Grid>
                     </VariableSizedWrapGrid>
-                </StackPanel>
-            </Border>
-        </StackPanel>
+                </Border>
+            </StackPanel>
+        </Viewbox>
 
         <!-- Tabbed detail area, one TabViewItem per DetailTabItem -->
         <TabView x:Name="DetailTabs"
