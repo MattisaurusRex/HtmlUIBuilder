@@ -1,0 +1,204 @@
+<Application
+    x:Class="HtmlWpf.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:HtmlWpf.Controls"
+    xmlns:converters="clr-namespace:HtmlWpf.Converters"
+    StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+
+            <!-- Palette ported from HtmlWinUI/App.xaml (originally site.css) -->
+            <SolidColorBrush x:Key="NavBarBrush" Color="#5791EB" />
+            <SolidColorBrush x:Key="SubmitButtonBrush" Color="#5783DB" />
+            <SolidColorBrush x:Key="GroupBorderBrush" Color="#D3D3E0" />
+            <SolidColorBrush x:Key="GroupHeadingBorderBrush" Color="#E9E9EF" />
+            <SolidColorBrush x:Key="GroupHeadingBrush" Color="Navy" />
+            <SolidColorBrush x:Key="CustomBlackBrush" Color="#575756" />
+            <LinearGradientBrush x:Key="NavButtonBrush" StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#75B9FF" Offset="0" />
+                <GradientStop Color="#5791EB" Offset="1" />
+            </LinearGradientBrush>
+
+            <converters:DateTimeToNullableDateTimeConverter x:Key="DateConverter" />
+
+            <!-- WPF buttons have no CornerRadius property; this template reads it
+                 from the ButtonProperties attached property set by each style. -->
+            <ControlTemplate x:Key="RoundedButtonTemplate" TargetType="Button">
+                <Border x:Name="Chrome"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{Binding Path=(controls:ButtonProperties.CornerRadius), RelativeSource={RelativeSource TemplatedParent}}"
+                        Padding="{TemplateBinding Padding}"
+                        SnapsToDevicePixels="True">
+                    <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                      RecognizesAccessKey="True" />
+                </Border>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter TargetName="Chrome" Property="Opacity" Value="0.9" />
+                    </Trigger>
+                    <Trigger Property="IsPressed" Value="True">
+                        <Setter TargetName="Chrome" Property="Opacity" Value="0.75" />
+                    </Trigger>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter TargetName="Chrome" Property="Opacity" Value="0.5" />
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+
+            <Style x:Key="PageTitleStyle" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="24" />
+                <Setter Property="FontWeight" Value="SemiBold" />
+                <Setter Property="Foreground" Value="{StaticResource CustomBlackBrush}" />
+                <Setter Property="Margin" Value="0,0,0,16" />
+            </Style>
+
+            <Style x:Key="BrandButtonStyle" TargetType="Button">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="FontWeight" Value="SemiBold" />
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="Padding" Value="8,4" />
+                <Setter Property="Template" Value="{StaticResource RoundedButtonTemplate}" />
+            </Style>
+
+            <Style x:Key="NavButtonStyle" TargetType="Button">
+                <Setter Property="Background" Value="{StaticResource NavButtonBrush}" />
+                <Setter Property="Foreground" Value="Navy" />
+                <Setter Property="FontWeight" Value="SemiBold" />
+                <Setter Property="controls:ButtonProperties.CornerRadius" Value="10" />
+                <Setter Property="Padding" Value="14,6" />
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="Margin" Value="8,0,0,0" />
+                <Setter Property="Template" Value="{StaticResource RoundedButtonTemplate}" />
+            </Style>
+
+            <Style x:Key="SubmitButtonStyle" TargetType="Button">
+                <Setter Property="Background" Value="{StaticResource SubmitButtonBrush}" />
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="FontWeight" Value="Bold" />
+                <Setter Property="controls:ButtonProperties.CornerRadius" Value="12" />
+                <Setter Property="Padding" Value="24,8" />
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="Template" Value="{StaticResource RoundedButtonTemplate}" />
+            </Style>
+
+            <Style x:Key="DashboardButtonStyle" TargetType="Button">
+                <Setter Property="Background" Value="White" />
+                <Setter Property="BorderBrush" Value="{StaticResource GroupBorderBrush}" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="controls:ButtonProperties.CornerRadius" Value="6" />
+                <Setter Property="Padding" Value="24,16" />
+                <Setter Property="MinWidth" Value="420" />
+                <Setter Property="Template" Value="{StaticResource RoundedButtonTemplate}" />
+            </Style>
+
+            <!-- Button colour classes from site.css (xxxFrontDetailBtn) -->
+            <SolidColorBrush x:Key="PurpleActionBrush" Color="#A74182" />
+            <SolidColorBrush x:Key="BlueActionBrush" Color="#5791EB" />
+            <SolidColorBrush x:Key="OrangeActionBrush" Color="#FF8803" />
+            <SolidColorBrush x:Key="GreenActionBrush" Color="#1E9855" />
+            <SolidColorBrush x:Key="WhiteActionBrush" Color="#E9E9EF" />
+            <SolidColorBrush x:Key="BrownActionBrush" Color="#A99087" />
+
+            <Style x:Key="ActionButtonStyle" TargetType="Button">
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="controls:ButtonProperties.CornerRadius" Value="6" />
+                <Setter Property="Padding" Value="10,6" />
+                <Setter Property="Margin" Value="0,0,8,8" />
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="FontWeight" Value="SemiBold" />
+                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="Template" Value="{StaticResource RoundedButtonTemplate}" />
+            </Style>
+            <Style x:Key="PurpleActionButtonStyle" TargetType="Button" BasedOn="{StaticResource ActionButtonStyle}">
+                <Setter Property="Background" Value="{StaticResource PurpleActionBrush}" />
+            </Style>
+            <Style x:Key="BlueActionButtonStyle" TargetType="Button" BasedOn="{StaticResource ActionButtonStyle}">
+                <Setter Property="Background" Value="{StaticResource BlueActionBrush}" />
+            </Style>
+            <Style x:Key="OrangeActionButtonStyle" TargetType="Button" BasedOn="{StaticResource ActionButtonStyle}">
+                <Setter Property="Background" Value="{StaticResource OrangeActionBrush}" />
+            </Style>
+            <Style x:Key="GreenActionButtonStyle" TargetType="Button" BasedOn="{StaticResource ActionButtonStyle}">
+                <Setter Property="Background" Value="{StaticResource GreenActionBrush}" />
+            </Style>
+            <Style x:Key="WhiteActionButtonStyle" TargetType="Button" BasedOn="{StaticResource ActionButtonStyle}">
+                <Setter Property="Background" Value="{StaticResource WhiteActionBrush}" />
+                <Setter Property="Foreground" Value="Black" />
+            </Style>
+            <Style x:Key="BrownActionButtonStyle" TargetType="Button" BasedOn="{StaticResource ActionButtonStyle}">
+                <Setter Property="Background" Value="{StaticResource BrownActionBrush}" />
+            </Style>
+
+            <!-- Bordered, headed form group chrome (SearchForm/DetailForm look) -->
+            <Style x:Key="GroupHeadingBorderStyle" TargetType="Border">
+                <Setter Property="BorderBrush" Value="{StaticResource GroupHeadingBorderBrush}" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="Padding" Value="8,2" />
+            </Style>
+            <Style x:Key="GroupHeadingTextStyle" TargetType="TextBlock">
+                <Setter Property="Foreground" Value="{StaticResource GroupHeadingBrush}" />
+                <Setter Property="FontSize" Value="12" />
+            </Style>
+            <Style x:Key="GroupBodyStyle" TargetType="Border">
+                <Setter Property="BorderBrush" Value="{StaticResource GroupBorderBrush}" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="Padding" Value="10" />
+                <Setter Property="CornerRadius" Value="2" />
+            </Style>
+
+            <!-- Labelled form field: WinUI controls had a built-in Header; in WPF
+                 each field is wrapped in a HeaderedContentControl with this style.
+                 Fields sit in WrapPanels of 304x76 (or 266x76) cells; the Padding
+                 reproduces the WinUI in-cell margin of 0,0,12,8. -->
+            <Style x:Key="FieldStyle" TargetType="HeaderedContentControl">
+                <Setter Property="VerticalAlignment" Value="Bottom" />
+                <Setter Property="Padding" Value="0,0,12,8" />
+                <Setter Property="Focusable" Value="False" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="HeaderedContentControl">
+                            <StackPanel Margin="{TemplateBinding Padding}">
+                                <!-- ContentPresenter rather than TextBlock+TemplateBinding:
+                                     TemplateBinding cannot convert the object-typed Header
+                                     to string and would render nothing. -->
+                                <ContentPresenter ContentSource="Header" TextBlock.FontSize="12" Margin="0,0,0,4" />
+                                <ContentPresenter />
+                            </StackPanel>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <!-- Fixed-width variant for panels that mix field cells with wider,
+                 spanning cells (the file detail header). -->
+            <Style x:Key="FieldStyle266" TargetType="HeaderedContentControl" BasedOn="{StaticResource FieldStyle}">
+                <Setter Property="Width" Value="266" />
+            </Style>
+
+            <Style x:Key="FieldCheckBoxStyle" TargetType="CheckBox">
+                <Setter Property="Margin" Value="0,0,12,8" />
+                <Setter Property="VerticalAlignment" Value="Bottom" />
+            </Style>
+            <Style x:Key="TableLabelStyle" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="FontWeight" Value="SemiBold" />
+                <Setter Property="Margin" Value="0,0,0,4" />
+            </Style>
+
+            <!-- EntityTable header chrome (all DataGrids in this app are EntityTables) -->
+            <Style TargetType="DataGridColumnHeader">
+                <Setter Property="Background" Value="{StaticResource GroupHeadingBorderBrush}" />
+                <Setter Property="FontWeight" Value="SemiBold" />
+                <Setter Property="Padding" Value="8,5" />
+                <Setter Property="BorderBrush" Value="{StaticResource GroupBorderBrush}" />
+                <Setter Property="BorderThickness" Value="0,0,1,1" />
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

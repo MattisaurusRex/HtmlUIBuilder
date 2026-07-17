@@ -1,0 +1,24 @@
+<Page
+    x:Class="HtmlWpf.Views.AboutPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="About">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="24" MaxWidth="900" HorizontalAlignment="Left">
+            <TextBlock Text="About" Style="{StaticResource PageTitleStyle}" TextDecorations="Underline" />
+            <TextBlock TextWrapping="Wrap" Foreground="{StaticResource CustomBlackBrush}" Margin="0,0,0,12"
+                       Text="This is a WPF desktop app, migrated from an ASP.NET Core MVC web app via a WinUI 3 port. It uses a small MVVM structure: domain models carry the form and tab schemas, lightweight adapters turn that metadata into view models, and XAML pages render them natively." />
+            <TextBlock TextWrapping="Wrap" Foreground="{StaticResource CustomBlackBrush}" Margin="0,0,0,12"
+                       Text="The app runs on the desktop without a browser or VPN-hosted intranet site. Navigation between sections is handled by an in-process navigation service instead of MVC action routing." />
+            <TextBlock>
+                <Hyperlink NavigateUri="https://www.flaticon.com/free-icons/invoice" RequestNavigate="Hyperlink_RequestNavigate">
+                    Icons created by Smashicons &amp; Freepik - Flaticon
+                </Hyperlink>
+            </TextBlock>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

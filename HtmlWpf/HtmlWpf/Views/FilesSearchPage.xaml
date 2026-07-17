@@ -1,0 +1,190 @@
+<Page
+    x:Class="HtmlWpf.Views.FilesSearchPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:HtmlWpf.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Files Search">
+
+    <!-- Fixed 1908px design width (6 field columns per group); the Viewbox scales
+         the whole form up or down so it always fits one screen without scrolling. -->
+    <Viewbox Stretch="Uniform" Margin="12">
+        <StackPanel Margin="24" Width="1860">
+            <TextBlock Text="Files Search" Style="{StaticResource PageTitleStyle}" />
+
+            <!-- Client -->
+            <StackPanel Margin="0,0,0,12">
+                <Border Style="{StaticResource GroupHeadingBorderStyle}">
+                    <TextBlock Text="Client" Style="{StaticResource GroupHeadingTextStyle}" />
+                </Border>
+                <Border Style="{StaticResource GroupBodyStyle}">
+                    <WrapPanel Orientation="Horizontal" ItemWidth="304" ItemHeight="76">
+                        <HeaderedContentControl Header="ID" Style="{StaticResource FieldStyle}">
+                            <TextBox Text="{Binding Model.ID, Mode=TwoWay}" />
+                        </HeaderedContentControl>
+                        <HeaderedContentControl Header="Barcode" Style="{StaticResource FieldStyle}">
+                            <TextBox Text="{Binding Model.Barcode, Mode=TwoWay}" />
+                        </HeaderedContentControl>
+                        <HeaderedContentControl Header="Client" Style="{StaticResource FieldStyle}">
+                            <TextBox Text="{Binding Model.Client, Mode=TwoWay}" />
+                        </HeaderedContentControl>
+                        <HeaderedContentControl Header="Section Number" Style="{StaticResource FieldStyle}">
+                            <TextBox Text="{Binding Model.SectionNo, Mode=TwoWay}" />
+                        </HeaderedContentControl>
+                        <HeaderedContentControl Header="Section Status" Style="{StaticResource FieldStyle}">
+                            <TextBox Text="{Binding Model.SectionStatus, Mode=TwoWay}" />
+                        </HeaderedContentControl>
+                        <HeaderedContentControl Header="Issue Number" Style="{StaticResource FieldStyle}">
+                            <TextBox Text="{Binding Model.IssueNo, Mode=TwoWay}" />
+                        </HeaderedContentControl>
+                        <HeaderedContentControl Header="Case Reference" Style="{StaticResource FieldStyle}">
+                            <TextBox Text="{Binding Model.CaseRef, Mode=TwoWay}" />
+                        </HeaderedContentControl>
+                        <HeaderedContentControl Header="Client Status" Style="{StaticResource FieldStyle}">
+                            <controls:PlaceholderComboBox ItemsSource="{Binding Model.ClientStatus}" PlaceholderText="Select a Client Status" />
+                        </HeaderedContentControl>
+                        <HeaderedContentControl Header="File Result" Style="{StaticResource FieldStyle}">
+                            <TextBox Text="{Binding Model.FileResult, Mode=TwoWay}" />
+                        </HeaderedContentControl>
+                        <HeaderedContentControl Header="Business Class" Style="{StaticResource FieldStyle}">
+                            <TextBox Text="{Binding Model.BusinessClass, Mode=TwoWay}" />
+                        </HeaderedContentControl>
+                        <HeaderedContentControl Header="Territory" Style="{StaticResource FieldStyle}">
+                            <TextBox Text="{Binding Model.Territory, Mode=TwoWay}" />
+                        </HeaderedContentControl>
+                        <HeaderedContentControl Header="Invoice ID" Style="{StaticResource FieldStyle}">
+                            <TextBox Text="{Binding Model.InvoiceID, Mode=TwoWay}" />
+                        </HeaderedContentControl>
+                        <CheckBox Content="Without Invoice" IsChecked="{Binding Model.WithoutInvoice, Mode=TwoWay}" Style="{StaticResource FieldCheckBoxStyle}" />
+                    </WrapPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- Dates -->
+            <StackPanel Margin="0,0,0,12">
+                <Border Style="{StaticResource GroupHeadingBorderStyle}">
+                    <TextBlock Text="Dates" Style="{StaticResource GroupHeadingTextStyle}" />
+                </Border>
+                <Border Style="{StaticResource GroupBodyStyle}">
+                    <WrapPanel Orientation="Horizontal" ItemWidth="304" ItemHeight="76">
+                        <HeaderedContentControl Header="File From" Style="{StaticResource FieldStyle}">
+                            <DatePicker SelectedDate="{Binding Model.FileFrom, Converter={StaticResource DateConverter}, Mode=TwoWay}" />
+                        </HeaderedContentControl>
+                        <HeaderedContentControl Header="File To" Style="{StaticResource FieldStyle}">
+                            <DatePicker SelectedDate="{Binding Model.FileTo, Converter={StaticResource DateConverter}, Mode=TwoWay}" />
+                        </HeaderedContentControl>
+                        <HeaderedContentControl Header="Received From" Style="{StaticResource FieldStyle}">
+                            <DatePicker SelectedDate="{Binding Model.ReceivedFrom, Converter={StaticResource DateConverter}, Mode=TwoWay}" />
+                        </HeaderedContentControl>
+                        <HeaderedContentControl Header="Received To" Style="{StaticResource FieldStyle}">
+                            <DatePicker SelectedDate="{Binding Model.ReceivedTo, Converter={StaticResource DateConverter}, Mode=TwoWay}" />
+                        </HeaderedContentControl>
+                        <HeaderedContentControl Header="Released From" Style="{StaticResource FieldStyle}">
+                            <DatePicker SelectedDate="{Binding Model.ReleasedFrom, Converter={StaticResource DateConverter}, Mode=TwoWay}" />
+                        </HeaderedContentControl>
+                        <HeaderedContentControl Header="Released To" Style="{StaticResource FieldStyle}">
+                            <DatePicker SelectedDate="{Binding Model.ReleasedTo, Converter={StaticResource DateConverter}, Mode=TwoWay}" />
+                        </HeaderedContentControl>
+                        <HeaderedContentControl Header="Approved From" Style="{StaticResource FieldStyle}">
+                            <DatePicker SelectedDate="{Binding Model.ApprovedFrom, Converter={StaticResource DateConverter}, Mode=TwoWay}" />
+                        </HeaderedContentControl>
+                        <HeaderedContentControl Header="Approved To" Style="{StaticResource FieldStyle}">
+                            <DatePicker SelectedDate="{Binding Model.ApprovedTo, Converter={StaticResource DateConverter}, Mode=TwoWay}" />
+                        </HeaderedContentControl>
+                        <HeaderedContentControl Header="Reported From" Style="{StaticResource FieldStyle}">
+                            <DatePicker SelectedDate="{Binding Model.ReportedFrom, Converter={StaticResource DateConverter}, Mode=TwoWay}" />
+                        </HeaderedContentControl>
+                        <HeaderedContentControl Header="Reported To" Style="{StaticResource FieldStyle}">
+                            <DatePicker SelectedDate="{Binding Model.ReportedTo, Converter={StaticResource DateConverter}, Mode=TwoWay}" />
+                        </HeaderedContentControl>
+                        <HeaderedContentControl Header="Invoiced From" Style="{StaticResource FieldStyle}">
+                            <DatePicker SelectedDate="{Binding Model.InvoicedFrom, Converter={StaticResource DateConverter}, Mode=TwoWay}" />
+                        </HeaderedContentControl>
+                        <HeaderedContentControl Header="Invoiced To" Style="{StaticResource FieldStyle}">
+                            <DatePicker SelectedDate="{Binding Model.InvoicedTo, Converter={StaticResource DateConverter}, Mode=TwoWay}" />
+                        </HeaderedContentControl>
+                    </WrapPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- Patient -->
+            <StackPanel Margin="0,0,0,12">
+                <Border Style="{StaticResource GroupHeadingBorderStyle}">
+                    <TextBlock Text="Patient" Style="{StaticResource GroupHeadingTextStyle}" />
+                </Border>
+                <Border Style="{StaticResource GroupBodyStyle}">
+                    <WrapPanel Orientation="Horizontal" ItemWidth="304" ItemHeight="76">
+                        <HeaderedContentControl Header="Patient Forename" Style="{StaticResource FieldStyle}">
+                            <TextBox Text="{Binding Model.PatientForename, Mode=TwoWay}" />
+                        </HeaderedContentControl>
+                        <HeaderedContentControl Header="Patient Surname" Style="{StaticResource FieldStyle}">
+                            <TextBox Text="{Binding Model.PatientSurname, Mode=TwoWay}" />
+                        </HeaderedContentControl>
+                        <HeaderedContentControl Header="Patient Gender" Style="{StaticResource FieldStyle}">
+                            <TextBox Text="{Binding Model.PatientGender, Mode=TwoWay}" />
+                        </HeaderedContentControl>
+                        <HeaderedContentControl Header="Patient DOB" Style="{StaticResource FieldStyle}">
+                            <DatePicker SelectedDate="{Binding Model.PatientDOB, Converter={StaticResource DateConverter}, Mode=TwoWay}" />
+                        </HeaderedContentControl>
+                        <HeaderedContentControl Header="Patient NI Number" Style="{StaticResource FieldStyle}">
+                            <TextBox Text="{Binding Model.PatientNINumber, Mode=TwoWay}" />
+                        </HeaderedContentControl>
+                        <HeaderedContentControl Header="Patient Passport Number" Style="{StaticResource FieldStyle}">
+                            <TextBox Text="{Binding Model.PatientPassportNumber, Mode=TwoWay}" />
+                        </HeaderedContentControl>
+                    </WrapPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- Office -->
+            <StackPanel Margin="0,0,0,12">
+                <Border Style="{StaticResource GroupHeadingBorderStyle}">
+                    <TextBlock Text="Office" Style="{StaticResource GroupHeadingTextStyle}" />
+                </Border>
+                <Border Style="{StaticResource GroupBodyStyle}">
+                    <WrapPanel Orientation="Horizontal" ItemWidth="304" ItemHeight="76">
+                        <HeaderedContentControl Header="File Type" Style="{StaticResource FieldStyle}">
+                            <TextBox Text="{Binding Model.FileType, Mode=TwoWay}" />
+                        </HeaderedContentControl>
+                        <HeaderedContentControl Header="Collector" Style="{StaticResource FieldStyle}">
+                            <TextBox Text="{Binding Model.Collector, Mode=TwoWay}" />
+                        </HeaderedContentControl>
+                        <HeaderedContentControl Header="Test Purpose" Style="{StaticResource FieldStyle}">
+                            <TextBox Text="{Binding Model.TestPurpose, Mode=TwoWay}" />
+                        </HeaderedContentControl>
+                        <HeaderedContentControl Header="File Colour" Style="{StaticResource FieldStyle}">
+                            <TextBox Text="{Binding Model.FileColour, Mode=TwoWay}" />
+                        </HeaderedContentControl>
+                        <HeaderedContentControl Header="Documentation" Style="{StaticResource FieldStyle}">
+                            <TextBox Text="{Binding Model.Documentation, Mode=TwoWay}" />
+                        </HeaderedContentControl>
+                        <HeaderedContentControl Header="Identification" Style="{StaticResource FieldStyle}">
+                            <TextBox Text="{Binding Model.Identification, Mode=TwoWay}" />
+                        </HeaderedContentControl>
+                        <HeaderedContentControl Header="Collection Status" Style="{StaticResource FieldStyle}">
+                            <TextBox Text="{Binding Model.CollectionStatus, Mode=TwoWay}" />
+                        </HeaderedContentControl>
+                        <CheckBox Content="Print" IsChecked="{Binding Model.Print, Mode=TwoWay}" Style="{StaticResource FieldCheckBoxStyle}" />
+                        <HeaderedContentControl Header="Workflow" Style="{StaticResource FieldStyle}">
+                            <TextBox Text="{Binding Model.Workflow, Mode=TwoWay}" />
+                        </HeaderedContentControl>
+                        <HeaderedContentControl Header="SBC" Style="{StaticResource FieldStyle}">
+                            <TextBox Text="{Binding Model.SBC, Mode=TwoWay}" />
+                        </HeaderedContentControl>
+                        <HeaderedContentControl Header="ID Type" Style="{StaticResource FieldStyle}">
+                            <TextBox Text="{Binding Model.IDType, Mode=TwoWay}" />
+                        </HeaderedContentControl>
+                    </WrapPanel>
+                </Border>
+            </StackPanel>
+
+            <Button Content="Submit"
+                    Click="Submit_Click"
+                    Style="{StaticResource SubmitButtonStyle}"
+                    HorizontalAlignment="Center"
+                    Margin="0,8,0,0" />
+        </StackPanel>
+    </Viewbox>
+</Page>
