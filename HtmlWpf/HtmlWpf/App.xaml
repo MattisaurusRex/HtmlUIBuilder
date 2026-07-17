@@ -114,6 +114,8 @@
                 <Setter Property="FontWeight" Value="SemiBold" />
                 <Setter Property="HorizontalAlignment" Value="Stretch" />
                 <Setter Property="BorderThickness" Value="0" />
+                <!-- Matches the 36px form inputs these buttons sit beside -->
+                <Setter Property="MinHeight" Value="36" />
                 <Setter Property="Template" Value="{StaticResource RoundedButtonTemplate}" />
             </Style>
             <Style x:Key="PurpleActionButtonStyle" TargetType="Button" BasedOn="{StaticResource ActionButtonStyle}">
@@ -134,6 +136,24 @@
             </Style>
             <Style x:Key="BrownActionButtonStyle" TargetType="Button" BasedOn="{StaticResource ActionButtonStyle}">
                 <Setter Property="Background" Value="{StaticResource BrownActionBrush}" />
+            </Style>
+
+            <!-- Form inputs: WPF's default control height (~22px) leaves the 76px
+                 field cells mostly empty; size them closer to WinUI's inputs so
+                 the forms fill their cells. Every TextBox/DatePicker/ComboBox in
+                 this app is a form field, so implicit styles keep the XAML lean. -->
+            <Style TargetType="TextBox">
+                <Setter Property="MinHeight" Value="36" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+                <Setter Property="Padding" Value="4,2" />
+            </Style>
+            <Style TargetType="DatePicker">
+                <Setter Property="MinHeight" Value="36" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+            </Style>
+            <Style TargetType="ComboBox">
+                <Setter Property="MinHeight" Value="36" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
             </Style>
 
             <!-- Bordered, headed form group chrome (SearchForm/DetailForm look) -->
@@ -168,7 +188,7 @@
                                 <!-- ContentPresenter rather than TextBlock+TemplateBinding:
                                      TemplateBinding cannot convert the object-typed Header
                                      to string and would render nothing. -->
-                                <ContentPresenter ContentSource="Header" TextBlock.FontSize="12" Margin="0,0,0,4" />
+                                <ContentPresenter ContentSource="Header" TextBlock.FontSize="13" Margin="0,0,0,4" />
                                 <ContentPresenter />
                             </StackPanel>
                         </ControlTemplate>
